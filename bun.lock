@@ -1,0 +1,18 @@
+{
+  "lockfileVersion": 1,
+  "configVersion": 1,
+  "workspaces": {
+    "": {
+      "name": "@pakakas/imzhao",
+      "dependencies": {
+        "@pakakas/cat": "link:@pakakas/cat",
+        "@pakakas/markzero": "link:@pakakas/markzero",
+      },
+    },
+  },
+  "packages": {
+    "@pakakas/cat": ["@pakakas/cat@link:@pakakas/cat", { "bin": { "cat": "cat.ts", "read_file": "cat.ts", "Get-Content": "cat.ts" } }],
+
+    "@pakakas/markzero": ["@pakakas/markzero@link:@pakakas/markzero", {}],
+  }
+}

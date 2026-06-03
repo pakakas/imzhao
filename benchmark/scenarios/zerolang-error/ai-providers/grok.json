@@ -1,0 +1,7 @@
+{
+  "name": "grok-4.3",
+  "type": "browser",
+  "temperature": 0.01,
+  "top_p": 1.0,
+  "reasoning_effort": "low"
+}

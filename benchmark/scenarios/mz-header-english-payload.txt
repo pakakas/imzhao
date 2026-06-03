@@ -1,0 +1,11 @@
+Agent Data Notation:
+ⓖ is grid marker
+ʀ is row marker
+ᴄ is column marker
+¦ is delimiter
+→ is key-value relation
+※ is grid reference
+★ is title marker
+ɛ is escape marker
+
+ⓖ124ʀ129ⓖʀfile→src/main.0ʀspan→※0ⓖᴄtype¦pos¦textʀinsert¦124¦let ⓖʀrepair_id→REP_ADD_LETʀactions→※2ⓖᴄcode¦message¦node_id¦location¦repairʀNAM003¦Undeclared identifier 'count'¦ast_node_592¦※1¦※3

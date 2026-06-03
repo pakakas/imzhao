@@ -1,0 +1,18 @@
+type:error_chain
+depth:4
+error:DatabaseQueryError
+message:Failed to execute query 'SELECT * FROM users WHERE id = ?'
+code:DB_QUERY_FAILED
+location:src/db/query.js:45:12
+cause:ConnectionPoolError
+cause_message:Connection pool exhausted (active: 50/50, waiting: 23)
+cause_code:POOL_EXHAUSTED
+cause_location:src/db/pool.js:112:8
+cause2:NetworkTimeoutError
+cause2_message:TCP connection to db.internal.prod:5432 timed out after 30000ms
+cause2_code:NET_TIMEOUT
+cause2_location:src/net/socket.js:78:15
+cause3:DNSError
+cause3_message:getaddrinfo ENOTFOUND db.internal.prod
+cause3_code:ENOTFOUND
+cause3_location:src/net/dns.js:23:5

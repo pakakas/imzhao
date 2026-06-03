@@ -1,0 +1,12 @@
+{
+  "name": "@pakakas/benchmark",
+  "version": "1.0.0",
+  "description": "Benchmark JSON vs PAP tokens",
+  "main": "index.ts",
+  "license": "ISC",
+  "dependencies": {
+    "@anthropic-ai/tokenizer": "^0.0.4",
+    "gpt-tokens": "latest",
+    "llama3-tokenizer-js": "^1.2.0"
+  }
+}

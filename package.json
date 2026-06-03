@@ -1,0 +1,17 @@
+{
+  "name": "@pakakas/imzhao",
+  "version": "0.0.1",
+  "description": "iMZHAO - Headless IDE + DevOps Agent.",
+  "main": "src/index.ts",
+  "license": "ISC",
+  "type": "module",
+  "scripts": {
+    "benchmark": "bun run benchmark/index.ts",
+    "benchmark:mimo": "bun run benchmark/index.ts --provider mimo",
+    "benchmark:grok": "bun run benchmark/index.ts --provider grok"
+  },
+  "dependencies": {
+    "@pakakas/cat": "^1.0.2",
+    "@pakakas/markzero": "^1.0.0"
+  }
+}

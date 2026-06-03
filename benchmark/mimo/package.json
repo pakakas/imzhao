@@ -1,0 +1,11 @@
+{
+  "name": "@pakakas/mimo-benchmark",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "run": "bun mimo-benchmark-report.ts"
+  },
+  "devDependencies": {
+    "bun-types": "latest"
+  }
+}
