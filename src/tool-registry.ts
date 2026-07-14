@@ -21,8 +21,8 @@ export enum HITLGates {
  * Extracts HITL tools from a tool list — tools that return τask.
  * Runtime uses this to build HITL gate; AI just sees them as normal tools.
  */
-export const RETURN_GRID = "τgrid";
-export const RETURN_ASK = "τask";
+export const RETURN_GRID = `${MARKERS.TYPE_ANNOTATION}grid`;
+export const RETURN_ASK = `${MARKERS.TYPE_ANNOTATION}ask`;
 
 export function getHITLTools(tools: ToolDef[]): ToolDef[] {
   return tools.filter((t) => t.returns === RETURN_ASK);
@@ -52,7 +52,7 @@ export function getAvailableTools(errorPayload: any): ToolDef[] {
     return errorPayload.available_tools.map((tool: any) => ({
       name: tool.name,
       params: parseParams(tool.params),
-      returns: tool.returns || "τgrid",
+      returns: tool.returns || `${MARKERS.TYPE_ANNOTATION}grid`,
     }));
   }
 
@@ -65,7 +65,7 @@ export function getAvailableTools(errorPayload: any): ToolDef[] {
       return {
         name,
         params: parseFlatParams(rawParams),
-        returns: "τgrid",
+        returns: `${MARKERS.TYPE_ANNOTATION}grid`,
       };
     });
   }
@@ -88,17 +88,17 @@ function parseFlatParams(raw: string): ToolParam[] {
     const trimmed = s.trim();
     const isOptional = trimmed.endsWith("[]");
     const name = trimmed.replace(/\[\]$/, "");
-    return { name, type: "τstr", optional: isOptional };
+    return { name, type: `${MARKERS.TYPE_ANNOTATION}str`, optional: isOptional };
   });
 }
 
 function normalizeType(type: string): string {
   const t = type.toLowerCase().replace(/\[\]$/, "").replace(/optional/i, "").trim();
   switch (t) {
-    case "string": return "τstr";
-    case "number": return "τnum";
-    case "boolean": return "τbool";
-    default: return `τ${t}`;
+    case "string": return `${MARKERS.TYPE_ANNOTATION}str`;
+    case "number": return `${MARKERS.TYPE_ANNOTATION}num`;
+    case "boolean": return `${MARKERS.TYPE_ANNOTATION}bool`;
+    default: return `${MARKERS.TYPE_ANNOTATION}${t}`;
   }
 }
 
@@ -115,7 +115,7 @@ export function toRegistryGrid(tools: ToolDef[]): string {
       const suffix = p.optional ? " optional" : "";
       return `${p.name} ${p.type}${suffix}`;
     }).join(" ");
-    return `   ${MARKERS.ROW_MARKER} ${tool.name}${MARKERS.ROW_SEP} ${args}${MARKERS.ROW_SEP} ${tool.returns || "τgrid"}`;
+    return `   ${MARKERS.ROW_MARKER} ${tool.name}${MARKERS.ROW_SEP} ${args}${MARKERS.ROW_SEP} ${tool.returns || `${MARKERS.TYPE_ANNOTATION}grid`}`;
   });
 
   return `\n${MARKERS.TITLE_MARKER} Registry\n${header}\n${rows.join("\n")}`;
@@ -131,9 +131,9 @@ export function toHeaderInstruction(tools: ToolDef[]): string {
   if (tools.length === 1) {
     const tool = tools[0]!;
     const args = tool.params.map((p) => p.name).join(" ");
-    return `Respond with ⓘ${tool.name} ${args}`;
+    return `Respond with ${MARKERS.INVOKE}${tool.name} ${args}`;
   }
-  return "Choose your tool and respond with ⓘtool arg1 arg2";
+  return `Choose your tool and respond with ${MARKERS.INVOKE}tool arg1 arg2`;
 }
 
 /**
@@ -152,9 +152,8 @@ const ADN_MARKERS: [string, string][] = [
 ];
 
 const AIR_MARKERS: [string, string][] = [
-  ["⇒", "pipe operator"],
-  ["τ", "type annotation"],
-  ["ⓘ", "invoke tool call"],
+  [MARKERS.TYPE_ANNOTATION, "type annotation"],
+  [MARKERS.INVOKE, "invoke tool call"],
 ];
 
 /**
@@ -199,7 +198,7 @@ export function buildToolCallPayload(errorPayload: any): string {
     const registryGrid = tools.map((tool) => ({
       cmd: tool.name,
       args: tool.params.map((p) => `${p.name} ${p.type}${p.optional ? " optional" : ""}`).join(" "),
-      returns: tool.returns || "τgrid",
+      returns: tool.returns || `${MARKERS.TYPE_ANNOTATION}grid`,
     }));
     (registryGrid as any)[Symbol.for("title")] = "Registry";
     data.push(registryGrid);

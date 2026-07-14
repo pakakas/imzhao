@@ -1,5 +1,6 @@
 import { decodeMZ } from "@pakakas/markzero";
 import type { MZMessage, MZBlock, MZTextBlock, MZDataBlock, MZInvokeBlock } from "@pakakas/markzero";
+import { MARKERS } from "@pakakas/markzero/src/util";
 
 export type AgenticBlockType = "text" | "data" | "invoke" | "type-annotation" | "tool-invoke";
 
@@ -39,7 +40,7 @@ export interface AgenticOptions {
   interceptInvoke?: boolean;
 }
 
-const TYPE_ANNOTATION_RE = /^τ(\w+)$/;
+const TYPE_ANNOTATION_RE = new RegExp(`^${MARKERS.TYPE_ANNOTATION}(\\w+)$`);
 
 function hasTypeAnnotation(obj: any): boolean {
   if (obj === null || typeof obj !== "object" || Array.isArray(obj)) return false;
