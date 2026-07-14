@@ -1,0 +1,121 @@
+{
+  "Version": "1.00.00",
+  "TUN": false,
+  "BackendState": "NoState",
+  "HaveNodeKey": false,
+  "AuthURL": "",
+  "TailscaleIPs": [
+    "6ac4:d41d:c52e:caf9::32c5"
+  ],
+  "Self": {
+    "ID": "Z9ax5QLojH",
+    "PublicKey": "nodekey:JQdH10Qsa4BCZu9m85qvWm0mOSpI5mmaFIIyiCz27WPQaSoOLQmTgkdVkGJzRD4q",
+    "HostName": "node-82",
+    "DNSName": "node-9828.example.test.",
+    "OS": "android",
+    "UserID": 458,
+    "TailscaleIPs": [
+      "9625:9c96:8fe6:c67b::cfca"
+    ],
+    "AllowedIPs": [
+      "10.43.162.121/12"
+    ],
+    "Addrs": [
+      "10.154.207.176:58668"
+    ],
+    "CurAddr": "",
+    "Relay": "lhr",
+    "PeerRelay": "",
+    "RxBytes": 266,
+    "TxBytes": 196,
+    "Created": "2026-02-22T23:17:04Z",
+    "LastWrite": "2025-10-15T16:39:43Z",
+    "LastSeen": "2021-07-05T09:34:04Z",
+    "LastHandshake": "2021-07-21T08:13:29Z",
+    "Online": true,
+    "ExitNode": false,
+    "ExitNodeOption": true,
+    "Active": false,
+    "PeerAPIURL": [
+      "https://host-1660.example.test/path"
+    ],
+    "TaildropTarget": 187,
+    "NoFileSharingReason": "",
+    "Capabilities": [
+      "B1f5GMr0of"
+    ],
+    "CapMap": {
+      "default-auto-update": [
+        false
+      ],
+      "<url>": null,
+      "probe-udp-lifetime": null,
+      "ssh-behavior-v1": null,
+      "ssh-env-vars": null,
+      "store-appc-routes": null,
+      "tailnet-display-name": [
+        "server-78"
+      ]
+    },
+    "InNetworkMap": true,
+    "InMagicSock": false,
+    "InEngine": false,
+    "KeyExpiry": "2020-11-04T20:50:26Z"
+  },
+  "Health": [],
+  "MagicDNSSuffix": "lZMujfwzN",
+  "CurrentTailnet": {
+    "Name": "node-90",
+    "MagicDNSSuffix": "cTgvPff3",
+    "MagicDNSEnabled": false
+  },
+  "CertDomains": null,
+  "Peer": {
+    "<nodekey>": {
+      "ID": "9dmUlvr5mg",
+      "PublicKey": "nodekey:qkYpHDXvzspDUtom0B4nas4IHUjVJu77UzYt5A6Yv3R5k6KLq2sENvK9zLdN1Cjw",
+      "HostName": "pc-74",
+      "DNSName": "node-4481.example.test.",
+      "OS": "linux",
+      "UserID": 465,
+      "TailscaleIPs": [
+        "10.76.28.90"
+      ],
+      "AllowedIPs": [
+        "05bd:ccbc:376e:9ca7::b861/105"
+      ],
+      "Addrs": null,
+      "CurAddr": "",
+      "Relay": "nyc",
+      "PeerRelay": "",
+      "RxBytes": 958,
+      "TxBytes": 505,
+      "Created": "2025-05-18T17:45:13Z",
+      "LastWrite": "2024-01-16T21:48:59Z",
+      "LastSeen": "2021-07-16T06:41:41Z",
+      "LastHandshake": "2026-01-15T16:42:52Z",
+      "Online": true,
+      "ExitNode": true,
+      "ExitNodeOption": false,
+      "Active": true,
+      "PeerAPIURL": [
+        "https://pc-6539.example.test/path"
+      ],
+      "TaildropTarget": 448,
+      "NoFileSharingReason": "",
+      "InNetworkMap": true,
+      "InMagicSock": true,
+      "InEngine": false,
+      "KeyExpiry": "2023-04-18T21:43:37Z"
+    }
+  },
+  "User": {
+    "<id>": {
+      "ID": 494,
+      "LoginName": "laptop-91",
+      "DisplayName": "laptop-7",
+      "ProfilePicURL": "https://host-8613.example.test/path"
+    }
+  },
+  "ClientVersion": null
+}

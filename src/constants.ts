@@ -1,2 +1,2 @@
-export const PROTO_START = "(m)";
-export const PROTO_END = "(z)";
+export const PROTO_START = "М"; // CYRILLIC CAPITAL LETTER EM (U+041C)
+export const PROTO_END = "О";   // CYRILLIC CAPITAL LETTER O (U+041E)

@@ -1,0 +1,4 @@
+Choose your tool and respond with ⓘtool arg1 arg2
+★Registryⓖ§cmd¦args¦returnsʀadd_import¦file τstr module τstr imports τstr¦τgridʀapply_code_action¦file τstr line τnum action τstr¦τgridʀsearch_docs¦query τstr¦τgrid
+★Errorⓖʀcode→TS2304ʀmessage→Cannot find name 'useState'.ʀfile→src/App.tsxʀline→5ʀcol→3
+★Contextⓖʀfile→src/App.tsxʀlanguage→typescriptʀproject→react-dashboard

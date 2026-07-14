@@ -1,0 +1,184 @@
+{
+  "Version": "1.98.4-t9e69045b2-ged3a62f14",
+  "TUN": true,
+  "BackendState": "Running",
+  "HaveNodeKey": true,
+  "AuthURL": "",
+  "TailscaleIPs": [
+    "100.90.229.12",
+    "fd7a:115c:a1e0::bc39:e50d"
+  ],
+  "Self": {
+    "ID": "njo1hcaN4e11CNTRL",
+    "PublicKey": "nodekey:ed3acc2954d15c993b3796ae4396498efd79702b1efb9c5c1b6c467577d71467",
+    "HostName": "larry-ProLiant-ML110-G7",
+    "DNSName": "dgt36-pc-atas.taila03319.ts.net.",
+    "OS": "linux",
+    "UserID": 1277903916603123,
+    "TailscaleIPs": [
+      "100.90.229.12",
+      "fd7a:115c:a1e0::bc39:e50d"
+    ],
+    "AllowedIPs": [
+      "100.90.229.12/32",
+      "fd7a:115c:a1e0::bc39:e50d/128"
+    ],
+    "Addrs": [
+      "182.10.131.245:26615",
+      "192.168.100.36:41641"
+    ],
+    "CurAddr": "",
+    "Relay": "sin",
+    "PeerRelay": "",
+    "RxBytes": 0,
+    "TxBytes": 0,
+    "Created": "2026-06-13T04:31:54.795021003Z",
+    "LastWrite": "0001-01-01T00:00:00Z",
+    "LastSeen": "0001-01-01T00:00:00Z",
+    "LastHandshake": "0001-01-01T00:00:00Z",
+    "Online": true,
+    "ExitNode": false,
+    "ExitNodeOption": false,
+    "Active": false,
+    "PeerAPIURL": [
+      "http://100.90.229.12:47606",
+      "http://[fd7a:115c:a1e0::bc39:e50d]:64537"
+    ],
+    "TaildropTarget": 0,
+    "NoFileSharingReason": "",
+    "Capabilities": [
+      "HTTPS://TAILSCALE.COM/s/DEPRECATED-NODE-CAPS#see-https://github.com/tailscale/tailscale/issues/11508",
+      "default-auto-update",
+      "https://tailscale.com/cap/file-sharing",
+      "https://tailscale.com/cap/is-admin",
+      "https://tailscale.com/cap/is-owner",
+      "https://tailscale.com/cap/ssh",
+      "https://tailscale.com/cap/tailnet-lock",
+      "probe-udp-lifetime",
+      "ssh-behavior-v1",
+      "ssh-env-vars",
+      "store-appc-routes",
+      "tailnet-display-name"
+    ],
+    "CapMap": {
+      "default-auto-update": [
+        true
+      ],
+      "https://tailscale.com/cap/file-sharing": null,
+      "https://tailscale.com/cap/is-admin": null,
+      "https://tailscale.com/cap/is-owner": null,
+      "https://tailscale.com/cap/ssh": null,
+      "https://tailscale.com/cap/tailnet-lock": null,
+      "probe-udp-lifetime": null,
+      "ssh-behavior-v1": null,
+      "ssh-env-vars": null,
+      "store-appc-routes": null,
+      "tailnet-display-name": [
+        "supalpuket@gmail.com"
+      ]
+    },
+    "InNetworkMap": true,
+    "InMagicSock": false,
+    "InEngine": false,
+    "KeyExpiry": "2026-12-10T04:59:21Z"
+  },
+  "Health": [],
+  "MagicDNSSuffix": "taila03319.ts.net",
+  "CurrentTailnet": {
+    "Name": "supalpuket@gmail.com",
+    "MagicDNSSuffix": "taila03319.ts.net",
+    "MagicDNSEnabled": true
+  },
+  "CertDomains": null,
+  "Peer": {
+    "nodekey:3d1dda73cfd39bc4b977b84dd138578fb15b47e9d5c4f0c3bfc7944cf7fb3d1c": {
+      "ID": "ngaFi4Zt3511CNTRL",
+      "PublicKey": "nodekey:3d1dda73cfd39bc4b977b84dd138578fb15b47e9d5c4f0c3bfc7944cf7fb3d1c",
+      "HostName": "tailscale-ssh-console-supalpuket@gmail.com-3fechdv20c",
+      "DNSName": "tailscale-ssh-console-supalpuket-gmail-com-3fechdv20c.taila03319.ts.net.",
+      "OS": "js",
+      "UserID": 1277903916603123,
+      "TailscaleIPs": [
+        "100.123.61.28",
+        "fd7a:115c:a1e0::f739:3d1d"
+      ],
+      "AllowedIPs": [
+        "100.123.61.28/32",
+        "fd7a:115c:a1e0::f739:3d1d/128"
+      ],
+      "Addrs": null,
+      "CurAddr": "",
+      "Relay": "sin",
+      "PeerRelay": "",
+      "RxBytes": 0,
+      "TxBytes": 0,
+      "Created": "2026-06-13T05:15:03.824909465Z",
+      "LastWrite": "2026-06-13T23:36:09.078963222+07:00",
+      "LastSeen": "0001-01-01T00:00:00Z",
+      "LastHandshake": "0001-01-01T00:00:00Z",
+      "Online": true,
+      "ExitNode": false,
+      "ExitNodeOption": false,
+      "Active": false,
+      "PeerAPIURL": [
+        "http://100.123.61.28:1",
+        "http://[fd7a:115c:a1e0::f739:3d1d]:1"
+      ],
+      "TaildropTarget": 1,
+      "NoFileSharingReason": "",
+      "InNetworkMap": true,
+      "InMagicSock": true,
+      "InEngine": false,
+      "KeyExpiry": "2026-12-10T05:15:03Z"
+    },
+    "nodekey:f9e9ca296b5ea0a5ab58f7cb8a0198eaafb2e82a21956e2827ab6ff10919121b": {
+      "ID": "nwWWhzHLfo11CNTRL",
+      "PublicKey": "nodekey:f9e9ca296b5ea0a5ab58f7cb8a0198eaafb2e82a21956e2827ab6ff10919121b",
+      "HostName": "I2216",
+      "DNSName": "i2216.taila03319.ts.net.",
+      "OS": "android",
+      "UserID": 1277903916603123,
+      "TailscaleIPs": [
+        "100.116.39.124",
+        "fd7a:115c:a1e0::dd39:277d"
+      ],
+      "AllowedIPs": [
+        "100.116.39.124/32",
+        "fd7a:115c:a1e0::dd39:277d/128"
+      ],
+      "Addrs": null,
+      "CurAddr": "",
+      "Relay": "sin",
+      "PeerRelay": "",
+      "RxBytes": 0,
+      "TxBytes": 0,
+      "Created": "2026-06-13T04:40:54.79390893Z",
+      "LastWrite": "0001-01-01T00:00:00Z",
+      "LastSeen": "2026-06-13T05:40:00.1Z",
+      "LastHandshake": "0001-01-01T00:00:00Z",
+      "Online": false,
+      "ExitNode": false,
+      "ExitNodeOption": false,
+      "Active": false,
+      "PeerAPIURL": [
+        "http://100.116.39.124:1",
+        "http://[fd7a:115c:a1e0::dd39:277d]:1"
+      ],
+      "TaildropTarget": 5,
+      "NoFileSharingReason": "",
+      "InNetworkMap": true,
+      "InMagicSock": true,
+      "InEngine": false,
+      "KeyExpiry": "2026-12-10T04:46:32Z"
+    }
+  },
+  "User": {
+    "1277903916603123": {
+      "ID": 1277903916603123,
+      "LoginName": "supalpuket@gmail.com",
+      "DisplayName": "Yus ham",
+      "ProfilePicURL": "https://lh3.googleusercontent.com/a/ACg8ocJfzFfVtwSD5lPqZUCps_UlRun0eFLAtMOMFjgqQ5GzDLP13-gg=s96-c"
+    }
+  },
+  "ClientVersion": null
+}

@@ -1,5 +1,5 @@
 import { encode, ENC_VALUES } from "@pakakas/markzero";
-import { GRID_MARKER, ROW_MARKER, COL_MARKER, ROW_SEP, KV_RELATION, TITLE_MARKER, VALUE_MARKER, VALUE_REF, GRID_REF, MZ_ID, ESCAPE_CHAR } from "@pakakas/markzero/src/util";
+import { MARKERS, MZ_ID } from "@pakakas/markzero/src/util";
 
 /**
  * Known HITL tool names.
@@ -109,16 +109,16 @@ function normalizeType(type: string): string {
 export function toRegistryGrid(tools: ToolDef[]): string {
   if (tools.length === 0) return "";
 
-  const header = `${GRID_MARKER} ${COL_MARKER} cmd${ROW_SEP} args${ROW_SEP} returns`;
+  const header = `${MARKERS.GRID_MARKER} ${MARKERS.COL_MARKER} cmd${MARKERS.ROW_SEP} args${MARKERS.ROW_SEP} returns`;
   const rows = tools.map((tool) => {
     const args = tool.params.map((p) => {
       const suffix = p.optional ? " optional" : "";
       return `${p.name} ${p.type}${suffix}`;
     }).join(" ");
-    return `   ${ROW_MARKER} ${tool.name}${ROW_SEP} ${args}${ROW_SEP} ${tool.returns || "τgrid"}`;
+    return `   ${MARKERS.ROW_MARKER} ${tool.name}${MARKERS.ROW_SEP} ${args}${MARKERS.ROW_SEP} ${tool.returns || "τgrid"}`;
   });
 
-  return `\n${TITLE_MARKER} Registry\n${header}\n${rows.join("\n")}`;
+  return `\n${MARKERS.TITLE_MARKER} Registry\n${header}\n${rows.join("\n")}`;
 }
 
 /**
@@ -140,16 +140,15 @@ export function toHeaderInstruction(tools: ToolDef[]): string {
  * Marker definitions for dynamic header generation.
  */
 const ADN_MARKERS: [string, string][] = [
-  [GRID_MARKER, "grid marker"],
-  [ROW_MARKER, "row marker"],
-  [COL_MARKER, "column marker"],
-  [ROW_SEP, "delimiter"],
-  [KV_RELATION, "key-value relation"],
-  [GRID_REF, "grid reference"],
-  [TITLE_MARKER, "title marker"],
-  [VALUE_MARKER, "interned string"],
-  [VALUE_REF, "string reference"],
-  [ESCAPE_CHAR, "escape marker"],
+  [MARKERS.GRID_MARKER, "grid marker"],
+  [MARKERS.ROW_MARKER, "row marker"],
+  [MARKERS.COL_MARKER, "column marker"],
+  [MARKERS.ROW_SEP, "delimiter"],
+  [MARKERS.KV_RELATION, "key-value relation"],
+  [MARKERS.GRID_REF, "grid reference"],
+  [MARKERS.TITLE_MARKER, "title marker"],
+  [MARKERS.VALUE_MARKER, "interned string"],
+  [MARKERS.VALUE_REF, "string reference"],
 ];
 
 const AIR_MARKERS: [string, string][] = [
@@ -177,7 +176,7 @@ export function buildHeader(adn: string): string {
   if (allUsed.length > 0) {
     lines.push("Agent Data Intermediate Representation");
     for (const [char, desc] of allUsed) {
-      lines.push(`${char} ${desc}`);
+      lines.push(`${char} is ${desc}`);
     }
   }
 
@@ -244,19 +243,4 @@ export function buildToolCallPayload(errorPayload: any): string {
   const smartHeader = buildHeader(adn);
 
   return `${smartHeader}\n${header}${prettyAdn}`;
-}
-
-function buildErrorGrid(error: any): string {
-  if (!error || Object.keys(error).length === 0) return "";
-
-  const rows: string[] = [];
-  if (error.code) rows.push(`   ${ROW_MARKER} code ${KV_RELATION} ${error.code}`);
-  if (error.message) rows.push(`   ${ROW_MARKER} message ${KV_RELATION} ${error.message}`);
-
-  const loc = error.location || {};
-  if (loc.file) rows.push(`   ${ROW_MARKER} file ${KV_RELATION} ${loc.file}`);
-  if (loc.line) rows.push(`   ${ROW_MARKER} line ${KV_RELATION} ${loc.line}`);
-  if (loc.column) rows.push(`   ${ROW_MARKER} col ${KV_RELATION} ${loc.column}`);
-
-  return `\n${TITLE_MARKER} Error\n${GRID_MARKER} ${rows.join("\n")}`;
 }

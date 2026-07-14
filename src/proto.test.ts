@@ -56,28 +56,28 @@ test("encodeResult wraps primitive values in object with value key and adds head
   // Check that it starts with PROTO_START
   expect(result.startsWith(PROTO_START)).toBe(true);
   // Check that it has inline decoder
-  expect(result.includes("ADNrules")).toBe(true);
+  expect(result.includes("MZrules")).toBe(true);
 });
 
 // Test encodeResult with empty array
 test("encodeResult wraps empty array in object with result key", () => {
   const result = encodeResult([]);
   expect(result.startsWith(PROTO_START)).toBe(true);
-  expect(result.includes("ADNrules")).toBe(true);
+  expect(result.includes("MZrules")).toBe(true);
 });
 
 // Test encodeResult with empty object
 test("encodeResult wraps empty object in object with result key", () => {
   const result = encodeResult({});
   expect(result.startsWith(PROTO_START)).toBe(true);
-  expect(result.includes("ADNrules")).toBe(true);
+  expect(result.includes("MZrules")).toBe(true);
 });
 
 // Test encodeResult with title
 test("encodeResult attaches title symbol when title provided", () => {
   const result = encodeResult({ foo: "bar" }, "Test Title");
   expect(result.startsWith(PROTO_START)).toBe(true);
-  expect(result.includes("ADNrules")).toBe(true);
+  expect(result.includes("MZrules")).toBe(true);
 });
 
 // Test encodeResult with close marker
