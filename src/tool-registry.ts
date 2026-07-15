@@ -170,7 +170,7 @@ export function buildHeader(adn: string): string {
   if (allUsed.length > 0) {
     lines.push("Agent Data Intermediate Representation");
     for (const [char, desc] of allUsed) {
-      lines.push(`${char} is ${desc}`);
+      lines.push(`${char} ${desc}`);
     }
   }
 

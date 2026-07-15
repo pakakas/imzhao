@@ -3,7 +3,7 @@
 import { MARKERS } from "@pakakas/markzero";
 
 export const ENC_INTERN: number = 1;
-const MZ_INLINE_DECODER_BASE = `MZrules${MARKERS.GRID_MARKER}grid${MARKERS.ROW_MARKER}row${MARKERS.COL_MARKER}columns${MARKERS.ROW_SEP}delimiter${MARKERS.KV_RELATION}is${MARKERS.GRID_REF}gridreference`;
+const MZ_INLINE_DECODER_BASE = `MZrules${MARKERS.GRID_MARKER}grid${MARKERS.ROW_MARKER}row${MARKERS.COL_MARKER}columns${MARKERS.ROW_SEP}delimiter${MARKERS.KV_RELATION}key-value${MARKERS.GRID_REF}gridreference`;
 export const MZ_INLINE_DECODER_INTERN_SUFFIX = `${MARKERS.VALUE_MARKER}intern${MARKERS.VALUE_REF}stringreference`;
 
 function getInlineDecoderHeader(mode: number): string {
