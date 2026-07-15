@@ -1,6 +1,6 @@
 // Inline Decoder Header utilities
 
-import { MARKERS } from "@pakakas/markzero/src/util";
+import { MARKERS } from "@pakakas/markzero";
 
 export const ENC_INTERN: number = 1;
 const MZ_INLINE_DECODER_BASE = `MZrules${MARKERS.GRID_MARKER}grid${MARKERS.ROW_MARKER}row${MARKERS.COL_MARKER}columns${MARKERS.ROW_SEP}delimiter${MARKERS.KV_RELATION}is${MARKERS.GRID_REF}gridreference`;

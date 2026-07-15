@@ -1,5 +1,7 @@
-import { encode, ENC_VALUES } from "@pakakas/markzero";
-import { MARKERS, MZ_ID } from "@pakakas/markzero/src/util";
+import { encode, ENC_VALUES, MARKERS } from "@pakakas/markzero";
+import { TYPE_ANNOTATION, INVOKE } from "./constants";
+
+const MZ_ID = "MZ";
 
 /**
  * Known HITL tool names.
@@ -21,12 +23,7 @@ export enum HITLGates {
  * Extracts HITL tools from a tool list — tools that return τask.
  * Runtime uses this to build HITL gate; AI just sees them as normal tools.
  */
-export const RETURN_GRID = `${MARKERS.TYPE_ANNOTATION}grid`;
-export const RETURN_ASK = `${MARKERS.TYPE_ANNOTATION}ask`;
-
-export function getHITLTools(tools: ToolDef[]): ToolDef[] {
-  return tools.filter((t) => t.returns === RETURN_ASK);
-}
+export const RETURN_GRID = `${TYPE_ANNOTATION}grid`;
 
 export interface ToolParam {
   name: string;
@@ -52,7 +49,7 @@ export function getAvailableTools(errorPayload: any): ToolDef[] {
     return errorPayload.available_tools.map((tool: any) => ({
       name: tool.name,
       params: parseParams(tool.params),
-      returns: tool.returns || `${MARKERS.TYPE_ANNOTATION}grid`,
+      returns: tool.returns || `${TYPE_ANNOTATION}grid`,
     }));
   }
 
@@ -65,7 +62,7 @@ export function getAvailableTools(errorPayload: any): ToolDef[] {
       return {
         name,
         params: parseFlatParams(rawParams),
-        returns: `${MARKERS.TYPE_ANNOTATION}grid`,
+        returns: `${TYPE_ANNOTATION}grid`,
       };
     });
   }
@@ -88,17 +85,17 @@ function parseFlatParams(raw: string): ToolParam[] {
     const trimmed = s.trim();
     const isOptional = trimmed.endsWith("[]");
     const name = trimmed.replace(/\[\]$/, "");
-    return { name, type: `${MARKERS.TYPE_ANNOTATION}str`, optional: isOptional };
+    return { name, type: `${TYPE_ANNOTATION}str`, optional: isOptional };
   });
 }
 
 function normalizeType(type: string): string {
   const t = type.toLowerCase().replace(/\[\]$/, "").replace(/optional/i, "").trim();
   switch (t) {
-    case "string": return `${MARKERS.TYPE_ANNOTATION}str`;
-    case "number": return `${MARKERS.TYPE_ANNOTATION}num`;
-    case "boolean": return `${MARKERS.TYPE_ANNOTATION}bool`;
-    default: return `${MARKERS.TYPE_ANNOTATION}${t}`;
+    case "string": return `${TYPE_ANNOTATION}str`;
+    case "number": return `${TYPE_ANNOTATION}num`;
+    case "boolean": return `${TYPE_ANNOTATION}bool`;
+    default: return `${TYPE_ANNOTATION}${t}`;
   }
 }
 
@@ -115,7 +112,7 @@ export function toRegistryGrid(tools: ToolDef[]): string {
       const suffix = p.optional ? " optional" : "";
       return `${p.name} ${p.type}${suffix}`;
     }).join(" ");
-    return `   ${MARKERS.ROW_MARKER} ${tool.name}${MARKERS.ROW_SEP} ${args}${MARKERS.ROW_SEP} ${tool.returns || `${MARKERS.TYPE_ANNOTATION}grid`}`;
+    return `   ${MARKERS.ROW_MARKER} ${tool.name}${MARKERS.ROW_SEP} ${args}${MARKERS.ROW_SEP} ${tool.returns || `${TYPE_ANNOTATION}grid`}`;
   });
 
   return `\n${MARKERS.TITLE_MARKER} Registry\n${header}\n${rows.join("\n")}`;
@@ -123,17 +120,17 @@ export function toRegistryGrid(tools: ToolDef[]): string {
 
 /**
  * Generates header instruction based on tool count.
- * Single tool: "Respond with ⓘtool arg1 arg2"
- * Multiple tools: "Choose your tool and respond with ⓘtool arg1 arg2"
+ * Single tool: "Respond with ¡tool arg1 arg2"
+ * Multiple tools: "Choose your tool and respond with ¡tool arg1 arg2"
  */
 export function toHeaderInstruction(tools: ToolDef[]): string {
   if (tools.length === 0) return "";
   if (tools.length === 1) {
     const tool = tools[0]!;
     const args = tool.params.map((p) => p.name).join(" ");
-    return `Respond with ${MARKERS.INVOKE}${tool.name} ${args}`;
+    return `Respond with ${INVOKE}${tool.name} ${args}`;
   }
-  return `Choose your tool and respond with ${MARKERS.INVOKE}tool arg1 arg2`;
+  return `Choose your tool and respond with ${INVOKE}tool arg1 arg2`;
 }
 
 /**
@@ -152,8 +149,8 @@ const ADN_MARKERS: [string, string][] = [
 ];
 
 const AIR_MARKERS: [string, string][] = [
-  [MARKERS.TYPE_ANNOTATION, "type annotation"],
-  [MARKERS.INVOKE, "invoke tool call"],
+  [TYPE_ANNOTATION, "type annotation"],
+  [INVOKE, "invoke tool call"],
 ];
 
 /**
@@ -198,7 +195,7 @@ export function buildToolCallPayload(errorPayload: any): string {
     const registryGrid = tools.map((tool) => ({
       cmd: tool.name,
       args: tool.params.map((p) => `${p.name} ${p.type}${p.optional ? " optional" : ""}`).join(" "),
-      returns: tool.returns || `${MARKERS.TYPE_ANNOTATION}grid`,
+      returns: tool.returns || `${TYPE_ANNOTATION}grid`,
     }));
     (registryGrid as any)[Symbol.for("title")] = "Registry";
     data.push(registryGrid);

@@ -16,10 +16,10 @@ Agentic does **not** define data serialization (that's ADN) or message framing (
 
 ## 2. AIR Operational Markers
 
-| Marker | Description |
-| :---: | :--- |
-| `τ` | Type annotation prefix — e.g. `τstr`, `τgrid`, `τnum` |
-| `ⓘ` | Invoke marker — triggers tool execution |
+| Marker | U+ | Description |
+| :---: | :---: | :--- |
+| `τ` | U+03C4 | Type annotation prefix — e.g. `τstr`, `τgrid`, `τnum` |
+| `¡` | U+00A1 | Invoke marker — triggers tool execution |
 
 These markers may appear in ADN payloads and are detected by `buildHeader()` in the MarkZero encoder.
 
@@ -153,4 +153,4 @@ Agent tool sends: tool cmd --dry-run
 | `old-tool` (legacy) | "unknown option" | Ask once, then "always" |
 
 ---
-*Official iMZHAO Specification — updated July 14, 2026*
+*Official iMZHAO Specification — updated July 15, 2026*

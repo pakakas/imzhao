@@ -1,2 +1,3 @@
-export const PROTO_START = "М"; // CYRILLIC CAPITAL LETTER EM (U+041C)
-export const PROTO_END = "О";   // CYRILLIC CAPITAL LETTER O (U+041E)
+// AIR (Agent Intermediate Representation) markers
+export const TYPE_ANNOTATION = "τ";  // GREEK SMALL LETTER TAU (U+03C4) – TYPE ANNOTATION PREFIX
+export const INVOKE = "¡";           // INVERTED EXCLAMATION MARK (U+00A1) – INVOKE / TOOL CALL
