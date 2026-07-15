@@ -120,7 +120,7 @@ assertIncludes(h8, "† title marker", "has †");
 assertIncludes(h8, "· interned string", "has ·");
 assertIncludes(h8, "¤ string reference", "has ¤");
 assertIncludes(h8, "τ type annotation", "has τ");
-assertIncludes(h8, "¡ invoke", "has ¡");
+assertIncludes(h8, "¡ tool call", "has ¡");
 
 // ═══════════════════════════════════════════════════════
 // Test 9: single marker only
