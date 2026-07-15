@@ -131,51 +131,7 @@ export function toHeaderInstruction(tools: ToolDef[]): string {
   return `Choose your tool and respond with \`${INVOKE}COMMAND ARG1 ARG2 ARG3\``;
 }
 
-/**
- * Marker definitions for dynamic header generation.
- */
-const ADN_MARKERS: [string, string][] = [
-  [MARKERS.GRID_MARKER, "grid marker"],
-  [MARKERS.ROW_MARKER, "row marker"],
-  [MARKERS.COL_MARKER, "column marker"],
-  [MARKERS.ROW_SEP, "delimiter"],
-  [MARKERS.KV_RELATION, "key-value relation"],
-  [MARKERS.GRID_REF, "grid reference"],
-  [MARKERS.TITLE_MARKER, "title marker"],
-  [MARKERS.VALUE_MARKER, "interned string"],
-  [MARKERS.VALUE_REF, "string reference"],
-];
 
-const AIR_MARKERS: [string, string][] = [
-  [TYPE_ANNOTATION, "type annotation"],
-  [INVOKE, "invoke tool call"],
-];
-
-/**
- * Builds a smart English header based on which markers actually appear in the ADN payload.
- * Only includes marker explanations that are present in the data.
- */
-/**
- * Builds a smart English header based on which markers actually appear in the ADN payload.
- * Works for ANY ADN payload, not just tool-call scenarios.
- * Only includes marker explanations that are present in the data.
- */
-export function buildHeader(adn: string): string {
-  const lines: string[] = [];
-
-  const usedAdn = ADN_MARKERS.filter(([char]) => adn.includes(char));
-  const usedAir = AIR_MARKERS.filter(([char]) => adn.includes(char));
-
-  const allUsed = [...usedAdn, ...usedAir];
-  if (allUsed.length > 0) {
-    lines.push("Agent Data Intermediate Representation");
-    for (const [char, desc] of allUsed) {
-      lines.push(`${char} ${desc}`);
-    }
-  }
-
-  return lines.join("\n");
-}
 
 /**
  * Full pipeline: error payload → English header + instruction + ADN-encoded Registry + Error.
@@ -227,8 +183,5 @@ export function buildToolCallPayload(errorPayload: any): string {
   // Encode with interning
   const adn = encode(data, ENC_VALUES);
 
-  // Build smart header based on actual payload content
-  const smartHeader = buildHeader(adn);
-
-  return `${smartHeader}\n${header}${adn}`;
+  return `${header}${adn}`;
 }
