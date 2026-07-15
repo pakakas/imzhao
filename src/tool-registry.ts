@@ -119,7 +119,7 @@ export function toRegistryGrid(tools: ToolDef[]): string {
 /**
  * Generates header instruction based on tool count.
  * Single tool: "Respond with ¡tool arg1 arg2"
- * Multiple tools: "Choose your tool and respond with ¡tool arg1 arg2"
+ * Multiple tools: "Respond with ¡COMMAND ARG1 ARG2 ARG3"
  */
 export function toHeaderInstruction(tools: ToolDef[]): string {
   if (tools.length === 0) return "";
@@ -128,7 +128,7 @@ export function toHeaderInstruction(tools: ToolDef[]): string {
     const args = tool.params.map((p) => p.name).join(" ");
     return `Respond with ${INVOKE}${tool.name} ${args}`;
   }
-  return `Choose your tool and respond with ${INVOKE}tool arg1 arg2`;
+  return `Respond with ${INVOKE}COMMAND ARG1 ARG2 ARG3`;
 }
 
 /**
