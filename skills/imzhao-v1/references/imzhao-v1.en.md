@@ -48,18 +48,38 @@ Pipeline, multiple rows:
 ```
 Decoded: `{ type: "invoke", commands: ["Script1", "Script2", "Script3"] }`
 
-## 4. HITL (Human-In-The-Loop) Protocol
+## 4. Tool Return Types and Data Classification
+
+When registering tools in the registry, their return type is annotated using `τ` prefixes (e.g., `τgrid`, `τmap`, `τset`). The structural representation of the result is classified as follows:
+
+### 4.1 Nested Structure: Grid (`τgrid`)
+Used when the response contains hierarchical or nested data structures (e.g., nested objects or arrays of objects).
+- **Encoding**: MarkZero flattens the nested data into multiple referencing grids connected via grid references (`※Index`).
+- **Example**:
+  - Grid 0: `░→status≡success→matches≡※1`
+  - Grid 1: `░§file¦lines→main.ts¦※2`
+  - Grid 2: `░10→20`
+
+### 4.2 Flat 1D Key-Value: Map (`τmap`)
+Used when the response is a flat object containing key-value pairs without nested elements.
+- **Example**: `░→os≡windows→cpu≡intel`
+
+### 4.3 Flat 1D List: Set (`τset`)
+Used when the response is a flat array or list of primitive values.
+- **Example**: `░Script1→Script2→Script3`
+
+## 5. HITL (Human-In-The-Loop) Protocol
 
 A lightweight, exit-code-based HITL protocol for CLI tools. Agent tools communicate with tool developers via `--dry-run` flag; tools respond with HTTP-semantic exit codes.
 
-### 4.1 Design Principles
+### 5.1 Design Principles
 
 1. **`--dry-run` = Maintenis protocol** — agent tool sends `--dry-run`, tool responds with exit code
 2. **Exit codes = HTTP semantics** — mapping from HTTP status codes to 2-digit exit codes
 3. **Tiered approval** — destructive tools require stricter confirmation even after "always allow"
 4. **Backward compatible** — tools without HITL support return error, agent tool falls back to legacy behavior
 
-### 4.2 `--dry-run` Flag
+### 5.2 `--dry-run` Flag
 
 Agent tool **always** sends `--dry-run` before execute. Tool must respond:
 
@@ -72,7 +92,7 @@ Agent tool → tool cmd --dry-run → tool respond exit code → agent tool hand
 | `--dry-run` | Dry run, check approval | Agent tool (always first) |
 | no `--dry-run` | Execute, already approved | Agent tool (after user approve) |
 
-### 4.3 Exit Codes (HTTP Semantics)
+### 5.3 Exit Codes (HTTP Semantics)
 
 | Exit Code | HTTP Analog | Constant | Meaning | Agent Tool Action |
 |-----------|-------------|----------|---------|-------------------|
@@ -83,7 +103,7 @@ Agent tool → tool cmd --dry-run → tool respond exit code → agent tool hand
 | `28` | 428 Precondition Required | `EXIT_PRECONDITION` | Needs approval (irreversible) | Ask + double confirmation |
 | `43` | 403 Forbidden | `EXIT_FORBIDDEN` | Rejected by user | Report rejection |
 
-### 4.4 Tiered Approval
+### 5.4 Tiered Approval
 
 ```
 ┌─────────────────────────────────────────────────────────┐
@@ -98,7 +118,7 @@ Agent tool → tool cmd --dry-run → tool respond exit code → agent tool hand
 └─────────────────────────────────────────────────────────┘
 ```
 
-### 4.5 Execution Modes
+### 5.5 Execution Modes
 
 Agent tool supports 3 execution modes, configurable per user and per tool:
 
@@ -118,7 +138,7 @@ Config example (per user + per tool):
 }
 ```
 
-### 4.6 Tool Developer Responsibilities
+### 5.6 Tool Developer Responsibilities
 
 1. Implement `--dry-run` flag handler (dry run mode)
 2. Check if command needs approval → respond with appropriate exit code
@@ -126,7 +146,7 @@ Config example (per user + per tool):
 4. Without `--dry-run` = execute normally (already approved)
 5. Document exit codes in `--help` output
 
-### 4.7 Agent Tool Responsibilities
+### 5.7 Agent Tool Responsibilities
 
 1. Always send `--dry-run` before execute
 2. Read exit code → implement tiered approval logic
@@ -134,7 +154,7 @@ Config example (per user + per tool):
 4. Enforce Tier 2 for destructive tools (exit 23/28)
 5. Fall back to legacy behavior if tool doesn't support `--dry-run`
 
-### 4.8 Backward Compatibility
+### 5.8 Backward Compatibility
 
 Deployed tools may not support `--dry-run`. Agent tool must handle:
 
