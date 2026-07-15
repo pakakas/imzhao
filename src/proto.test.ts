@@ -1,74 +1,57 @@
 import { parse, encodeResult } from "./proto.ts";
-import { encode, decode, MARKERS } from "@pakakas/markzero";
+import { encode, MARKERS } from "@pakakas/markzero";
 import { test, expect } from "bun:test";
 
-// Test plain text without any markers
-test("parse plain text returns single text block", () => {
-  const anyText = "just any text";
-  const result = parse(anyText);
-  expect(result).toEqual([{ type: "text", content: anyText }]);
-});
+const M = MARKERS.MESSAGE_START;
 
-// Test mixed text with one MZ block
-test("parse mixed text with one MZ block", () => {
+// parse() delegates to decodeAgentic — always receives MZ stream
+
+test("parse single MZ message returns AgenticMessage", () => {
   const payload = encode({ foo: "bar" });
-  const mixed = `prefix ${MARKERS.MESSAGE_START}${payload}`;
-  const result = parse(mixed);
-  // Expect two blocks: prefix text and mz block
-  expect(result.length).toBe(2);
-  expect(result[0]).toEqual({ type: "text", content: "prefix " });
-  const expectedDecoded = decode(payload);
-  const expectedMzBlock = { type: "mz", content: payload, data: expectedDecoded };
-  expect(result[1]).toEqual(expectedMzBlock);
+  const stream = `${M}assistant@2026-01-01T00:00:00Z\n${payload}`;
+  const result = parse(stream);
+  // single message → AgenticMessage (not array)
+  expect(Array.isArray(result)).toBe(false);
+  expect((result as any).role).toBe("assistant");
 });
 
-// Test optional closure
-test("parse MZ block uses EOF as implicit close", () => {
-  const payload = encode({ user: "hyuze", role: "admin" });
-  const input = `Here is the user profile: ${MARKERS.MESSAGE_START}${payload}`;
-  const result = parse(input);
-  expect(result.length).toBe(2);
-  expect(result[0]).toEqual({ type: "text", content: "Here is the user profile: " });
-  const expectedDecoded = decode(payload);
-  expect(result[1]).toEqual({ type: "mz", content: payload, data: expectedDecoded });
+test("parse multiple MZ messages returns AgenticMessage[]", () => {
+  const p1 = encode({ foo: "bar" });
+  const p2 = encode({ baz: "qux" });
+  const stream = `${M}assistant@2026-01-01T00:00:00Z\n${p1}${M}assistant@2026-01-01T00:00:01Z\n${p2}`;
+  const result = parse(stream);
+  expect(Array.isArray(result)).toBe(true);
+  expect((result as any[]).length).toBe(2);
 });
 
-// Test multiple MZ blocks in one stream
-test("parse multiple MZ blocks", () => {
-  const payload1 = encode({ foo: "bar" });
-  const payload2 = encode({ baz: "qux" });
-  const input = `first ${MARKERS.MESSAGE_START}${payload1}${MARKERS.MESSAGE_START}${payload2}`;
-  const result = parse(input);
-  expect(result.length).toBe(3);
-  expect(result[0]).toEqual({ type: "text", content: "first " });
-  expect(result[1]).toEqual({ type: "mz", content: payload1, data: decode(payload1) });
-  expect(result[2]).toEqual({ type: "mz", content: payload2, data: decode(payload2) });
+test("parse MZ with flat invoke (¡) returns tool-invoke block", () => {
+  const stream = `${M}assistant@2026-01-01T00:00:00Z\n¡grep pattern path`;
+  const result = parse(stream) as any;
+  const blocks = result.blocks;
+  expect(blocks[0].type).toBe("tool-invoke");
+  expect(blocks[0].commands[0]).toEqual(["grep", "pattern", "path"]);
 });
 
-// Test encodeResult with primitive value
+// encodeResult tests unchanged
+
 test("encodeResult wraps primitive values in object with value key and adds header", () => {
   const result = encodeResult("hello world");
-  // Check that it starts with MARKERS.MESSAGE_START
   expect(result.startsWith(MARKERS.MESSAGE_START)).toBe(true);
-  // Check that it has inline decoder
   expect(result.includes("MZrules")).toBe(true);
 });
 
-// Test encodeResult with empty array
 test("encodeResult wraps empty array in object with result key", () => {
   const result = encodeResult([]);
   expect(result.startsWith(MARKERS.MESSAGE_START)).toBe(true);
   expect(result.includes("MZrules")).toBe(true);
 });
 
-// Test encodeResult with empty object
 test("encodeResult wraps empty object in object with result key", () => {
   const result = encodeResult({});
   expect(result.startsWith(MARKERS.MESSAGE_START)).toBe(true);
   expect(result.includes("MZrules")).toBe(true);
 });
 
-// Test encodeResult with title
 test("encodeResult attaches title symbol when title provided", () => {
   const result = encodeResult({ foo: "bar" }, "Test Title");
   expect(result.startsWith(MARKERS.MESSAGE_START)).toBe(true);
