@@ -7,7 +7,7 @@ export { grepSearch } from "./search";
 export type { SearchMatch, SearchOptions } from "./search";
 export { parse, encodeResult } from "./proto";
 export type { ParsedBlock } from "./proto";
-export { getAvailableTools, toRegistryGrid, toHeaderInstruction, buildToolCallPayload, buildHeader, RETURN_GRID, RETURN_ASK, HITLActions, HITLGates, getHITLTools } from "./tool-registry";
+export { getAvailableTools, toRegistryGrid, toHeaderInstruction, buildToolCallPayload, buildHeader, RETURN_GRID, HITLActions, HITLGates } from "./tool-registry";
 export type { ToolDef, ToolParam } from "./tool-registry";
 export { decodeAgentic } from "./agentic";
 export type { AgenticMessage, AgenticBlock, AgenticTextBlock, AgenticDataBlock, AgenticInvokeBlock, AgenticTypeBlock, AgenticOptions } from "./agentic";
