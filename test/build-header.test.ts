@@ -201,7 +201,7 @@ const testPayload = {
 
 const payloadStr = buildToolCallPayload(testPayload);
 assertIncludes(payloadStr, "Agent Data Intermediate Representation", "has header title");
-assertIncludes(payloadStr, "Respond with ¡grep pattern path", "has instruction");
+assertIncludes(payloadStr, "Respond with `¡grep pattern path`", "has instruction");
 assertIncludes(payloadStr, "░Registry", "has Registry grid");
 assertIncludes(payloadStr, "code≡CMD_FAILED", "has error code");
 assertIncludes(payloadStr, "project≡pakakas", "has context");
