@@ -57,3 +57,15 @@ test("encodeResult attaches title symbol when title provided", () => {
   expect(result.startsWith(MARKERS.MESSAGE_START)).toBe(true);
   expect(result.includes("MZrules")).toBe(false);
 });
+
+test("encodeResult encodes tool-invoke object correctly", () => {
+  const result = encodeResult({
+    type: "tool-invoke",
+    mode: "pipeline",
+    commands: [
+      ["grep", "const"],
+      ["count", "-n", "10"]
+    ]
+  });
+  expect(result).toBe(`${M}¡grep const¦count -n 10`);
+});
