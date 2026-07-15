@@ -178,6 +178,36 @@ assertIncludes(h12, "† is title marker", "has †");
 assertNotIncludes(h12, "⇒ is pipe", "no ⇒");
 
 // ═══════════════════════════════════════════════════════
+// Test 13: buildToolCallPayload
+// ═══════════════════════════════════════════════════════
+console.log("\n[Test 13] buildToolCallPayload integration");
+import { buildToolCallPayload } from "../src/tool-registry";
+const testPayload = {
+  available_tools: [
+    {
+      name: "grep",
+      params: { pattern: "string", path: "string optional" }
+    }
+  ],
+  error: {
+    code: "CMD_FAILED",
+    message: "command failed",
+    location: { file: "src/main.ts", line: 10 }
+  },
+  context: {
+    project: "pakakas"
+  }
+};
+
+const payloadStr = buildToolCallPayload(testPayload);
+assertIncludes(payloadStr, "Agent Data Intermediate Representation", "has header title");
+assertIncludes(payloadStr, "Respond with ¡grep pattern path", "has instruction");
+assertIncludes(payloadStr, "░Registry", "has Registry grid");
+assertIncludes(payloadStr, "code≡CMD_FAILED", "has error code");
+assertIncludes(payloadStr, "project≡pakakas", "has context");
+assertIncludes(payloadStr, "grep", "has tool name");
+
+// ═══════════════════════════════════════════════════════
 // Summary
 // ═══════════════════════════════════════════════════════
 console.log(`\n═══════════════════════════════════════`);
