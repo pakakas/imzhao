@@ -36,7 +36,7 @@ const ADN_MARKERS: [string, string][] = [
 
 const AIR_MARKERS: [string, string][] = [
   [TYPE_ANNOTATION, "type annotation"],
-  [INVOKE, "invoke tool call"],
+  [INVOKE, "invoke"],
 ];
 
 /**
