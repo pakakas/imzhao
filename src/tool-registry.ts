@@ -1,8 +1,6 @@
 import { encode, ENC_VALUES, MARKERS } from "@pakakas/markzero";
 import { TYPE_ANNOTATION, INVOKE } from "./constants";
 
-const MZ_ID = "MZ";
-
 /**
  * Known HITL tool names.
  */
@@ -227,10 +225,7 @@ export function buildToolCallPayload(errorPayload: any): string {
   }
 
   // Encode with interning
-  const encoded = encode(data, ENC_VALUES);
-
-  // Strip ⓜ prefix (we use English header instead)
-  const adn = encoded.startsWith(MZ_ID) ? encoded.slice(MZ_ID.length) : encoded;
+  const adn = encode(data, ENC_VALUES);
 
   // Insert ★ on new lines for readability
   const prettyAdn = adn.replace(/★/g, "\n★");
