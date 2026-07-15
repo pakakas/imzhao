@@ -34,26 +34,26 @@ test("parse MZ with flat invoke (¡) returns tool-invoke block", () => {
 
 // encodeResult tests unchanged
 
-test("encodeResult wraps primitive values in object with value key and adds header", () => {
+test("encodeResult wraps primitive values in object with value key", () => {
   const result = encodeResult("hello world");
   expect(result.startsWith(MARKERS.MESSAGE_START)).toBe(true);
-  expect(result.includes("MZrules")).toBe(true);
+  expect(result.includes("MZrules")).toBe(false);
 });
 
 test("encodeResult wraps empty array in object with result key", () => {
   const result = encodeResult([]);
   expect(result.startsWith(MARKERS.MESSAGE_START)).toBe(true);
-  expect(result.includes("MZrules")).toBe(true);
+  expect(result.includes("MZrules")).toBe(false);
 });
 
 test("encodeResult wraps empty object in object with result key", () => {
   const result = encodeResult({});
   expect(result.startsWith(MARKERS.MESSAGE_START)).toBe(true);
-  expect(result.includes("MZrules")).toBe(true);
+  expect(result.includes("MZrules")).toBe(false);
 });
 
 test("encodeResult attaches title symbol when title provided", () => {
   const result = encodeResult({ foo: "bar" }, "Test Title");
   expect(result.startsWith(MARKERS.MESSAGE_START)).toBe(true);
-  expect(result.includes("MZrules")).toBe(true);
+  expect(result.includes("MZrules")).toBe(false);
 });

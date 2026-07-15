@@ -1,5 +1,4 @@
 import { encode, MARKERS } from "@pakakas/markzero";
-import { addInlineDecoder } from "./mz-header.ts";
 import { TYPE_ANNOTATION, INVOKE } from "./constants.ts";
 import { decodeAgentic } from "./agentic.ts";
 import type { AgenticMessage } from "./agentic.ts";
@@ -85,6 +84,5 @@ export function encodeResult(result: any, title?: string): string {
   }
 
   let mz = encode(payload);
-  mz = addInlineDecoder(mz);
   return MARKERS.MESSAGE_START + mz;
 }
