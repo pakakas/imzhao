@@ -128,7 +128,7 @@ export function toHeaderInstruction(tools: ToolDef[]): string {
     const args = tool.params.map((p) => p.name).join(" ");
     return `Respond with ${INVOKE}${tool.name} ${args}`;
   }
-  return `Respond with ${INVOKE}COMMAND ARG1 ARG2 ARG3`;
+  return `Choose your tool and respond with ${INVOKE}COMMAND ARG1 ARG2 ARG3`;
 }
 
 /**
