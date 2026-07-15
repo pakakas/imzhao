@@ -127,3 +127,27 @@ test("decodeAgentic decodes multiple tool invoke commands (parallel with →)", 
     ]
   });
 });
+
+test("decodeAgentic decodes plain flat command without М envelope", () => {
+  const raw = '¡grep "const"';
+  const result = decodeAgentic(raw);
+  const msg = result as any;
+  expect(msg.role).toBe("");
+  expect(msg.ts).toBe("");
+  expect(msg.blocks.length).toBe(1);
+  expect(msg.blocks[0]).toEqual({
+    type: "tool-invoke",
+    mode: "pipeline",
+    commands: [["grep", "const"]]
+  });
+});
+
+test("decodeAgentic decodes plain ADN grid without М envelope", () => {
+  const raw = '░Grep Matches§file¦line→src/main.ts¦10';
+  const result = decodeAgentic(raw);
+  const msg = result as any;
+  expect(msg.role).toBe("");
+  expect(msg.ts).toBe("");
+  expect(msg.blocks.length).toBe(1);
+  expect(msg.blocks[0].type).toBe("data");
+});

@@ -234,18 +234,25 @@ function classifyBlock(block: MZBlock, options: AgenticOptions): AgenticBlock {
 }
 
 export function decodeAgentic(raw: string, options?: AgenticOptions): AgenticMessage | AgenticMessage[] {
+  if (!raw) throw new Error("Input string is required");
+
+  const hasEnvelope = raw.startsWith(MARKERS.MESSAGE_START);
+  const parsedInput = hasEnvelope ? raw : `${MARKERS.MESSAGE_START}assistant@2026-07-16T00:00:00Z${raw}`;
+
   // Pass context containing reviver to decodeMZ
-  const result = decodeMZ(raw, { reviver: agenticReviver });
+  const result = decodeMZ(parsedInput, { reviver: agenticReviver });
 
   if (Array.isArray(result)) {
     return result.map(msg => ({
-      ...msg,
-      blocks: msg.blocks.map(b => classifyBlock(b, options ?? {})),
+      role: hasEnvelope ? msg.role : "",
+      ts: hasEnvelope ? msg.ts : "",
+      blocks: msg.blocks.map(b => classifyBlock(b, options || {}))
     }));
   }
 
   return {
-    ...result,
-    blocks: result.blocks.map(b => classifyBlock(b, options ?? {})),
+    role: hasEnvelope ? result.role : "",
+    ts: hasEnvelope ? result.ts : "",
+    blocks: result.blocks.map(b => classifyBlock(b, options || {}))
   };
 }
