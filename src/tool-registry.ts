@@ -227,11 +227,8 @@ export function buildToolCallPayload(errorPayload: any): string {
   // Encode with interning
   const adn = encode(data, ENC_VALUES);
 
-  // Insert ★ on new lines for readability
-  const prettyAdn = adn.replace(/★/g, "\n★");
-
   // Build smart header based on actual payload content
   const smartHeader = buildHeader(adn);
 
-  return `${smartHeader}\n${header}${prettyAdn}`;
+  return `${smartHeader}\n${header}${adn}`;
 }
