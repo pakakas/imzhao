@@ -8,7 +8,7 @@ const M = MARKERS.MESSAGE_START;
 
 test("parse single MZ message returns AgenticMessage", () => {
   const payload = encode({ foo: "bar" });
-  const stream = `${M}assistant@2026-01-01T00:00:00Z\n${payload}`;
+  const stream = `${M}assistant@2026-01-01T00:00:00Z${payload}`;
   const result = parse(stream);
   // single message → AgenticMessage (not array)
   expect(Array.isArray(result)).toBe(false);
@@ -18,14 +18,14 @@ test("parse single MZ message returns AgenticMessage", () => {
 test("parse multiple MZ messages returns AgenticMessage[]", () => {
   const p1 = encode({ foo: "bar" });
   const p2 = encode({ baz: "qux" });
-  const stream = `${M}assistant@2026-01-01T00:00:00Z\n${p1}${M}assistant@2026-01-01T00:00:01Z\n${p2}`;
+  const stream = `${M}assistant@2026-01-01T00:00:00Z${p1}${M}assistant@2026-01-01T00:00:01Z${p2}`;
   const result = parse(stream);
   expect(Array.isArray(result)).toBe(true);
   expect((result as any[]).length).toBe(2);
 });
 
 test("parse MZ with flat invoke (¡) returns tool-invoke block", () => {
-  const stream = `${M}assistant@2026-01-01T00:00:00Z\n¡grep pattern path`;
+  const stream = `${M}assistant@2026-01-01T00:00:00Z¡grep pattern path`;
   const result = parse(stream) as any;
   const blocks = result.blocks;
   expect(blocks[0].type).toBe("tool-invoke");
