@@ -40,18 +40,18 @@ One command, one row:
 Decoded: `{ type: "invoke", commands: "CLI_SCRIPT" }`
 
 ### 3.2 Parallel Tool Calls
-Multiple commands in one row (multi-cell):
-```
-░→invoke≡Script1¦Script2¦Script3
-```
-Decoded: `{ type: "invoke", commands: ["Script1", "Script2", "Script3"] }`
-
-### 3.3 Sequential Tool Calls
-Pipeline, multiple rows:
+Multiple commands in multiple rows:
 ```
 ░→invoke≡Script1→Script2→Script3
 ```
-Decoded: `{ type: "invoke", commands: ["Script1", "Script2", "Script3"] }`
+Decoded: `{ type: "invoke", mode: "parallel", commands: ["Script1", "Script2", "Script3"] }`
+
+### 3.3 Sequential Tool Calls (Pipeline)
+Multiple commands in one row (multi-cell/columns):
+```
+░→invoke≡Script1¦Script2¦Script3
+```
+Decoded: `{ type: "invoke", mode: "pipeline", commands: ["Script1", "Script2", "Script3"] }`
 
 ## 4. Tool Return Types and Data Classification
 
