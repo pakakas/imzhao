@@ -1,4 +1,4 @@
-import { parse, encodeResult } from "./proto.ts";
+import { parse, encodeResult } from "../test/adapter";
 import { encode, MARKERS } from "@pakakas/markzero";
 import { test, expect } from "bun:test";
 

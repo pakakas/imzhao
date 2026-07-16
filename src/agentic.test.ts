@@ -1,4 +1,4 @@
-import { decodeAgentic } from "./agentic";
+import { decodeAgentic } from "../test/adapter";
 import { test, expect } from "bun:test";
 import { MARKERS } from "@pakakas/markzero";
 

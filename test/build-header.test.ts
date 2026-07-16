@@ -1,4 +1,4 @@
-import { buildHeader } from "../src/mz-header";
+import { buildHeader } from "./adapter";
 
 let passed = 0;
 let failed = 0;
@@ -181,7 +181,7 @@ assertNotIncludes(h12, "⇒ pipe", "no ⇒");
 // Test 13: buildToolCallPayload
 // ═══════════════════════════════════════════════════════
 console.log("\n[Test 13] buildToolCallPayload integration");
-import { buildToolCallPayload } from "../src/tool-registry";
+import { buildToolCallPayload } from "./adapter";
 const testPayload = {
   available_tools: [
     {
@@ -212,7 +212,7 @@ assertIncludes(payloadStr, "path τstr optional", "registry grid formats optiona
 // Test 14: flat registry params with space separator
 // ═══════════════════════════════════════════════════════
 console.log("\n[Test 14] flat registry params with space separator");
-import { getAvailableTools, toRegistryGrid } from "../src/tool-registry";
+import { getAvailableTools, toRegistryGrid } from "./adapter";
 
 const flatPayload = {
   tools: "fix_config,reload_service",

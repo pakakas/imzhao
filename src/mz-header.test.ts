@@ -1,4 +1,5 @@
-import { addInlineDecoder, ENC_INTERN, MZ_INLINE_DECODER_INTERN_SUFFIX } from "./mz-header.ts";
+import { addInlineDecoder } from "../test/adapter";
+import { ENC_INTERN, MZ_INLINE_DECODER_INTERN_SUFFIX } from "./mz-header.ts";
 import { encode } from "@pakakas/markzero";
 import { test, expect } from "bun:test";
 
