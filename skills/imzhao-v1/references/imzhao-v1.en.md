@@ -46,14 +46,14 @@ Decoded: `{ type: "tool-invoke", mode: "pipeline", commands: [["grep", "pattern"
 ### 3.2 Sequential Tool Calls (Pipeline)
 Multiple commands separated by column delimiters (`¦`) to form a pipeline:
 ```
-¡grep const ¦ count -n 10
+¡grep const¦count -n 10
 ```
 Decoded: `{ type: "tool-invoke", mode: "pipeline", commands: [["grep", "const"], ["count", "-n", "10"]] }`
 
 ### 3.3 Parallel Tool Calls
 Multiple commands separated by row markers (`→`) for parallel execution:
 ```
-¡grep const → count -v
+¡grep const→count -v
 ```
 Decoded: `{ type: "tool-invoke", mode: "parallel", commands: [["grep", "const"], ["count", "-v"]] }`
 

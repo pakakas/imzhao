@@ -48,7 +48,7 @@ test("decodeAgentic decodes flat tool invoke command (¡) directly without grid 
 });
 
 test("decodeAgentic decodes multiple tool invoke commands (pipeline with ¦)", () => {
-  const raw = 'Мassistant@2026-07-15T00:00:00Z¡grep "const" --exclude-dir=node_modules ¦ count -n 10';
+  const raw = 'Мassistant@2026-07-15T00:00:00Z¡grep "const" --exclude-dir=node_modules¦count -n 10';
   const result = decodeAgentic(raw);
   const msg = result as any;
   expect(msg.blocks.length).toBe(1);
@@ -63,7 +63,7 @@ test("decodeAgentic decodes multiple tool invoke commands (pipeline with ¦)", (
 });
 
 test("decodeAgentic decodes multiple tool invoke commands (parallel with →)", () => {
-  const raw = 'Мassistant@2026-07-15T00:00:00Z¡grep "const" --exclude-dir=node_modules → count -v';
+  const raw = 'Мassistant@2026-07-15T00:00:00Z¡grep "const" --exclude-dir=node_modules→count -v';
   const result = decodeAgentic(raw);
   const msg = result as any;
   expect(msg.blocks.length).toBe(1);
