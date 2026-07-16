@@ -215,7 +215,7 @@ import { getAvailableTools, toRegistryGrid } from "../src/tool-registry";
 
 const flatPayload = {
   tools: "add_import,apply_code_action",
-  "add_import.params": "file,module,imports[]",
+  "add_import.params": "file,module,imports",
   "apply_code_action.params": "file,line,action"
 };
 
@@ -224,11 +224,11 @@ assert(flatTools.length === 2, "parsed 2 tools");
 assert(flatTools[0].name === "add_import", "first tool is add_import");
 assert(flatTools[0].params.length === 3, "add_import has 3 params");
 assert(flatTools[0].params[2].name === "imports", "third param name is imports");
-assert(flatTools[0].params[2].type === "τstr[]", "third param type is τstr[]");
+assert(flatTools[0].params[2].type === "τstr", "third param type is τstr");
 assert(flatTools[0].params[2].optional === false, "third param is NOT optional");
 
 const regGrid = toRegistryGrid(flatTools);
-assert(regGrid.includes("imports τstr[]"), "registry grid formats array type correctly");
+assert(regGrid.includes("imports τstr"), "registry grid formats param correctly");
 
 // ═══════════════════════════════════════════════════════
 // Summary

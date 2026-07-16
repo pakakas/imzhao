@@ -24,10 +24,9 @@ Agentic does **not** define data serialization (that's ADN) or message framing (
 These markers may appear in ADN payloads and can be summarized in the instruction header using `buildHeader()`.
 
 ### 2.1 Parameter Modifiers: Optional Parameters
-In flat format schemas (such as MDKV), parameters can be marked as optional:
-- **Input Suffix Notation**: In raw flat parameters input, an optional parameter is marked with a trailing `[]` bracket notation (e.g., `imports[]`).
-- **Parsing**: The parser (`parseFlatParams`) identifies `[]` at the end of the parameter name, sets `optional: true`, and strips the suffix from the final parameter name (`imports`).
-- **Header/Registry Generation**: In the generated registry block metadata, optional parameters are annotated with the explicit word `optional` (e.g., `imports τstr optional` in the `args` description) to avoid confusion with array types (which traditionally use `[]` in JS/TS).
+Parameters in the registry can be marked as optional:
+- **Detection**: In structured parameter schemas, a parameter is marked optional if its type definition contains the word `optional` (e.g., `"string optional"`). The parser (`parseParams`) identifies the word, sets `optional: true`, and normalizes the type annotation to its base form (e.g., `τstr`).
+- **Registry Generation**: In the generated Registry table, optional parameters are formatted as `${name} ${type} optional` (e.g., `path τstr optional`).
 
 ## 3. Tool Calling Patterns
 
