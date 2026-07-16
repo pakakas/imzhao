@@ -79,8 +79,8 @@ function parseParams(params: Record<string, string> | undefined): ToolParam[] {
 
 function parseFlatParams(raw: string): ToolParam[] {
   if (!raw) return [];
-  return raw.split(",").map((s) => ({
-    name: s.trim(),
+  return raw.trim().split(/\s+/).map((s) => ({
+    name: s,
     type: `${TYPE_ANNOTATION}str`,
     optional: false,
   }));
