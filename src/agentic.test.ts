@@ -25,62 +25,11 @@ test("decodeAgentic intercepts type annotations via reviver", () => {
   });
 });
 
-test("decodeAgentic intercepts invoke calls via reviver", () => {
-  // Encoded form of Map { "invoke": "run_test" } -> ░→invoke≡run_test
-  const raw = "Мassistant@2026-07-15T00:00:00Z░→invoke≡run_test";
-  const result = decodeAgentic(raw);
-  const msg = result as any;
-  expect(msg.blocks.length).toBe(1);
-  expect(msg.blocks[0]).toEqual({
-    type: "invoke",
-    commands: "run_test",
-  });
-});
-
 test("decodeAgentic respects intercept options", () => {
   const raw = "Мassistant@2026-07-15T00:00:00Z░→τstr≡my value";
   const result = decodeAgentic(raw, { interceptTypes: false });
   const msg = result as any;
   expect(msg.blocks[0].type).toBe("data");
-});
-
-test("decodeAgentic parallel tool calls", () => {
-  // Encoded form of Map { "invoke": ["Script1", "Script2", "Script3"] }
-  const raw = "Мassistant@2026-07-15T00:00:00Z░→invoke≡※1░Script1→Script2→Script3";
-  const result = decodeAgentic(raw);
-  const msg = result as any;
-  expect(msg.blocks[0].type).toBe("invoke");
-  expect(msg.blocks[0].commands).toEqual(["Script1", "Script2", "Script3"]);
-});
-
-test("decodeAgentic sequential tool calls", () => {
-  // Encoded form of 1D Set ["invoke", "Script1", "Script2", "Script3"] -> ░invoke→Script1→Script2→Script3
-  const raw = "Мassistant@2026-07-15T00:00:00Z░invoke→Script1→Script2→Script3";
-  const result = decodeAgentic(raw);
-  const msg = result as any;
-  expect(msg.blocks[0].type).toBe("invoke");
-  expect(msg.blocks[0].commands).toEqual(["Script1", "Script2", "Script3"]);
-});
-
-test("decodeAgentic invoke with metadata", () => {
-  // Encoded form of Map { "code": "ts", "invoke": "CLI_SCRIPT" } -> ░→code≡ts→invoke≡CLI_SCRIPT
-  const raw = "Мassistant@2026-07-15T00:00:00Z░→code≡ts→invoke≡CLI_SCRIPT";
-  const result = decodeAgentic(raw);
-  const msg = result as any;
-  expect(msg.blocks[0].type).toBe("invoke");
-  expect(msg.blocks[0].code).toBe("ts");
-  expect(msg.blocks[0].commands).toBe("CLI_SCRIPT");
-});
-
-test("decodeAgentic invoke mixed with text and data blocks", () => {
-  // Encoded form of multiple grids -> ░text≡Running...░→invoke≡CLI_SCRIPT░→result≡ok
-  const raw = "Мassistant@2026-07-15T00:00:00Z░text≡Running...░→invoke≡CLI_SCRIPT░→result≡ok";
-  const result = decodeAgentic(raw);
-  const msg = result as any;
-  expect(msg.blocks.length).toBe(3);
-  expect(msg.blocks[0].type).toBe("text");
-  expect(msg.blocks[1].type).toBe("invoke");
-  expect(msg.blocks[2].type).toBe("data");
 });
 
 test("decodeAgentic decodes flat tool invoke command (¡) directly without grid marker", () => {

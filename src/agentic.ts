@@ -3,7 +3,7 @@ import type { MZMessage, MZBlock, MZTextBlock, MZDataBlock, MZInvokeBlock, Reviv
 import { MARKERS } from "@pakakas/markzero";
 import { TYPE_ANNOTATION, INVOKE } from "./constants";
 
-export type AgenticBlockType = "text" | "data" | "invoke" | "type-annotation" | "tool-invoke";
+export type AgenticBlockType = "text" | "data" | "type-annotation" | "tool-invoke";
 
 export interface AgenticTextBlock {
   type: "text";
@@ -13,12 +13,6 @@ export interface AgenticTextBlock {
 export interface AgenticDataBlock {
   type: "data";
   payload: any;
-  [key: string]: any;
-}
-
-export interface AgenticInvokeBlock {
-  type: "invoke";
-  commands: string | string[];
   [key: string]: any;
 }
 
@@ -34,7 +28,7 @@ export interface AgenticToolInvokeBlock {
   commands: string[][];
 }
 
-export type AgenticBlock = AgenticTextBlock | AgenticDataBlock | AgenticInvokeBlock | AgenticTypeBlock | AgenticToolInvokeBlock;
+export type AgenticBlock = AgenticTextBlock | AgenticDataBlock | AgenticTypeBlock | AgenticToolInvokeBlock;
 
 export interface AgenticMessage {
   role: string;
@@ -138,31 +132,7 @@ export const agenticReviver: Reviver = (value: any, key: string | number, parent
     return value;
   }
 
-  // 2. Tangani Sequential Invoke (Array dimulai dengan "invoke")
-  if (Array.isArray(value)) {
-    if (value.length > 0) {
-      const first = value[0];
-      const cmdKey = Array.isArray(first) ? first[0] : first;
-      if (cmdKey === "invoke") {
-        const scripts: string[] = [];
-        for (let i = 1; i < value.length; i++) {
-          const row = value[i];
-          if (Array.isArray(row)) {
-            scripts.push(...row);
-          } else {
-            scripts.push(row);
-          }
-        }
-        return {
-          type: "invoke",
-          commands: scripts.length === 1 ? scripts[0] : scripts
-        };
-      }
-    }
-    return value;
-  }
-
-  // 3. Tangani Type Annotation (τ)
+  // 2. Tangani Type Annotation (τ)
   const typeKey = Object.keys(value).find(k => k.startsWith(TYPE_ANNOTATION));
   if (typeKey) {
     const annotation = typeKey.slice(TYPE_ANNOTATION.length);
@@ -170,16 +140,6 @@ export const agenticReviver: Reviver = (value: any, key: string | number, parent
       type: "type-annotation",
       annotation: annotation,
       value: value[typeKey]
-    };
-  }
-
-  // 4. Tangani Tool Invoke Call
-  if ("invoke" in value) {
-    const { invoke, ...rest } = value;
-    return {
-      type: "invoke",
-      commands: invoke,
-      ...rest
     };
   }
 
@@ -195,13 +155,6 @@ function classifyBlock(block: MZBlock, options: AgenticOptions): AgenticBlock {
     return { type: "text", content: block.content };
   }
 
-  if (block.type === "invoke") {
-    if (options.interceptInvoke !== false) {
-      return { type: "invoke", commands: block.commands, ...block };
-    }
-    return { type: "data", payload: block };
-  }
-
   if (block.type === "data") {
     let payload = block.payload;
     if (Array.isArray(payload) && payload.length === 1) {
@@ -210,9 +163,6 @@ function classifyBlock(block: MZBlock, options: AgenticOptions): AgenticBlock {
 
     if (payload && typeof payload === "object") {
       if (options.interceptTypes !== false && payload.type === "type-annotation") {
-        return payload;
-      }
-      if (options.interceptInvoke !== false && payload.type === "invoke") {
         return payload;
       }
       if (options.interceptInvoke !== false && payload.type === "tool-invoke") {
