@@ -10,8 +10,7 @@ description: Skill for handling iMZHAO agent protocol operational markers and to
 - Use `¡` (U+00A1) as invoke marker to trigger tool execution.
 
 ## Registry Grid
-- Format tool registry using `░` grid with columns: `invoke`, `args`, `returns`.
-- Recognize ADN grid with title `Tool Registry` as the tool registry.
+- Format tool registry as `░` grid with title `Tool Registry` and columns: `invoke`, `args`, `returns`.
 - Map optional parameters using suffix `optional` (e.g., `path τstr optional`).
 
 ## Tool Calling (Special Grid)
