@@ -25,9 +25,9 @@ These markers may appear in ADN payloads and can be summarized in the instructio
 
 ### 2.1 Parameter Modifiers: Optional Parameters
 In flat format schemas (such as MDKV), parameters can be marked as optional:
-- **Suffix Notation**: An optional parameter name is marked with a trailing `optional` suffix (e.g., `imports optional`).
-- **Parsing**: The parser (`parseFlatParams`) identifies `optional` at the end of the parameter name, sets `optional: true`, and strips the suffix from the final parameter name (`imports`).
-- **Header Generation**: In the registry block metadata, optional parameters are annotated with the word `optional` (e.g., `imports τstr optional` in the `args` description).
+- **Input Suffix Notation**: In raw flat parameters input, an optional parameter is marked with a trailing `[]` bracket notation (e.g., `imports[]`).
+- **Parsing**: The parser (`parseFlatParams`) identifies `[]` at the end of the parameter name, sets `optional: true`, and strips the suffix from the final parameter name (`imports`).
+- **Header/Registry Generation**: In the generated registry block metadata, optional parameters are annotated with the explicit word `optional` (e.g., `imports τstr optional` in the `args` description) to avoid confusion with array types (which traditionally use `[]` in JS/TS).
 
 ## 3. Tool Calling Patterns
 

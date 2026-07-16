@@ -81,8 +81,8 @@ function parseFlatParams(raw: string): ToolParam[] {
   if (!raw) return [];
   return raw.split(",").map((s) => {
     const trimmed = s.trim();
-    const isOptional = trimmed.toLowerCase().endsWith("optional");
-    const name = trimmed.replace(/\s*optional/i, "").trim();
+    const isOptional = trimmed.endsWith("[]");
+    const name = trimmed.replace(/\[\]$/, "");
     return { name, type: `${TYPE_ANNOTATION}str`, optional: isOptional };
   });
 }

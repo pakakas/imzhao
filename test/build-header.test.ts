@@ -215,7 +215,7 @@ import { getAvailableTools, toRegistryGrid } from "../src/tool-registry";
 
 const flatPayload = {
   tools: "add_import,apply_code_action",
-  "add_import.params": "file,module,imports optional",
+  "add_import.params": "file,module,imports[]",
   "apply_code_action.params": "file,line,action"
 };
 
