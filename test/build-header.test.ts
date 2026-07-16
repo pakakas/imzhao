@@ -208,6 +208,28 @@ assertIncludes(payloadStr, "project≡pakakas", "has context");
 assertIncludes(payloadStr, "grep", "has tool name");
 
 // ═══════════════════════════════════════════════════════
+// Test 14: flat registry params with optional modifier 'optional'
+// ═══════════════════════════════════════════════════════
+console.log("\n[Test 14] flat registry params with optional modifier 'optional'");
+import { getAvailableTools, toRegistryGrid } from "../src/tool-registry";
+
+const flatPayload = {
+  tools: "add_import,apply_code_action",
+  "add_import.params": "file,module,imports optional",
+  "apply_code_action.params": "file,line,action"
+};
+
+const flatTools = getAvailableTools(flatPayload);
+assert(flatTools.length === 2, "parsed 2 tools");
+assert(flatTools[0].name === "add_import", "first tool is add_import");
+assert(flatTools[0].params.length === 3, "add_import has 3 params");
+assert(flatTools[0].params[2].name === "imports", "third param name is imports");
+assert(flatTools[0].params[2].optional === true, "third param is optional");
+
+const regGrid = toRegistryGrid(flatTools);
+assert(regGrid.includes("imports τstr optional"), "registry grid formats optional param correctly");
+
+// ═══════════════════════════════════════════════════════
 // Summary
 // ═══════════════════════════════════════════════════════
 console.log(`\n═══════════════════════════════════════`);
