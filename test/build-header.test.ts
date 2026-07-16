@@ -214,21 +214,21 @@ console.log("\n[Test 14] flat registry params with optional modifier 'optional'"
 import { getAvailableTools, toRegistryGrid } from "../src/tool-registry";
 
 const flatPayload = {
-  tools: "add_import,apply_code_action",
-  "add_import.params": "file,module,imports",
-  "apply_code_action.params": "file,line,action"
+  tools: "fix_config,reload_service",
+  "fix_config.params": "file,line,replacement",
+  "reload_service.params": "service"
 };
 
 const flatTools = getAvailableTools(flatPayload);
 assert(flatTools.length === 2, "parsed 2 tools");
-assert(flatTools[0].name === "add_import", "first tool is add_import");
-assert(flatTools[0].params.length === 3, "add_import has 3 params");
-assert(flatTools[0].params[2].name === "imports", "third param name is imports");
+assert(flatTools[0].name === "fix_config", "first tool is fix_config");
+assert(flatTools[0].params.length === 3, "fix_config has 3 params");
+assert(flatTools[0].params[2].name === "replacement", "third param name is replacement");
 assert(flatTools[0].params[2].type === "τstr", "third param type is τstr");
 assert(flatTools[0].params[2].optional === false, "third param is NOT optional");
 
 const regGrid = toRegistryGrid(flatTools);
-assert(regGrid.includes("imports τstr"), "registry grid formats param correctly");
+assert(regGrid.includes("replacement τstr"), "registry grid formats param correctly");
 
 // ═══════════════════════════════════════════════════════
 // Summary
