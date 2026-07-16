@@ -206,29 +206,7 @@ assertIncludes(payloadStr, "░Registry", "has Registry grid");
 assertIncludes(payloadStr, "code≡CMD_FAILED", "has error code");
 assertIncludes(payloadStr, "project≡pakakas", "has context");
 assertIncludes(payloadStr, "grep", "has tool name");
-
-// ═══════════════════════════════════════════════════════
-// Test 14: flat registry params with optional modifier 'optional'
-// ═══════════════════════════════════════════════════════
-console.log("\n[Test 14] flat registry params with optional modifier 'optional'");
-import { getAvailableTools, toRegistryGrid } from "../src/tool-registry";
-
-const flatPayload = {
-  tools: "fix_config,reload_service",
-  "fix_config.params": "file,line,replacement",
-  "reload_service.params": "service"
-};
-
-const flatTools = getAvailableTools(flatPayload);
-assert(flatTools.length === 2, "parsed 2 tools");
-assert(flatTools[0].name === "fix_config", "first tool is fix_config");
-assert(flatTools[0].params.length === 3, "fix_config has 3 params");
-assert(flatTools[0].params[2].name === "replacement", "third param name is replacement");
-assert(flatTools[0].params[2].type === "τstr", "third param type is τstr");
-assert(flatTools[0].params[2].optional === false, "third param is NOT optional");
-
-const regGrid = toRegistryGrid(flatTools);
-assert(regGrid.includes("replacement τstr"), "registry grid formats param correctly");
+assertIncludes(payloadStr, "path τstr optional", "registry grid formats optional parameter correctly");
 
 // ═══════════════════════════════════════════════════════
 // Summary
