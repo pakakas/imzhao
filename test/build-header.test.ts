@@ -136,7 +136,7 @@ assertNotIncludes(h9, "≡ key-value relation", "no ≡");
 // Test 10: nginx config error → tool call
 // ═══════════════════════════════════════════════════════
 console.log("\n[Test 10] nginx config error → tool call");
-const nginx = `†Registry░§cmd¦args¦returns→fix_config¦file line replacement ¦ τgrid→remove_line¦file line ¦ τgrid→validate_config¦file ¦ τgrid
+const nginx = `†Registry░§invoke¦args¦returns→fix_config¦file line replacement ¦ τgrid→remove_line¦file line ¦ τgrid→validate_config¦file ¦ τgrid
 †Error░→code≡NGINX_DUP_UPSTREAM→message≡duplicate upstream "backend" in /etc/nginx/conf.d/upstream.conf:5
 †Action░→cmd≡remove_line→file≡/etc/nginx/conf.d/upstream.conf→line≡5`;
 const h10 = buildHeader(nginx);
@@ -155,7 +155,7 @@ assertNotIncludes(h10, "⇒ pipe", "no ⇒");
 // Test 11: apache config error → tool call
 // ═══════════════════════════════════════════════════════
 console.log("\n[Test 11] apache config error → tool call");
-const apache = `†Registry░§cmd¦args¦returns→enable_module¦module ¦ τgrid→fix_config¦file line replacement ¦ τgrid→reload_service¦service ¦ τgrid
+const apache = `†Registry░§invoke¦args¦returns→enable_module¦module ¦ τgrid→fix_config¦file line replacement ¦ τgrid→reload_service¦service ¦ τgrid
 †Error░→code≡APACHE_INVALID_CMD→message≡Invalid command 'SSLEngine', perhaps misspelled or defined by a module not included in the server configuration
 †Action░→cmd≡enable_module→module≡mod_ssl`;
 const h11 = buildHeader(apache);
@@ -168,7 +168,7 @@ assertNotIncludes(h11, "※ grid reference", "no ※");
 // Test 12: nginx ssl cert not found → tool call with ※
 // ═══════════════════════════════════════════════════════
 console.log("\n[Test 12] nginx ssl cert error with ※ refs");
-const nginxSsl = `†Registry░§cmd¦args¦returns→fix_config¦file line replacement ¦ τgrid→generate_cert¦domain path ¦ τgrid
+const nginxSsl = `†Registry░§invoke¦args¦returns→fix_config¦file line replacement ¦ τgrid→generate_cert¦domain path ¦ τgrid
 †Error░→code≡NGINX_SSL_CERT_NOT_FOUND→message≡cannot load certificate "/etc/ssl/certs/site.pem": BIO_new_file() failed
 †Action░→cmd≡generate_cert→domain≡example.com→path≡※0`;
 const h12 = buildHeader(nginxSsl);

@@ -103,7 +103,7 @@ function normalizeType(type: string): string {
 export function toRegistryGrid(tools: ToolDef[]): string {
   if (tools.length === 0) return "";
 
-  const header = `${MARKERS.GRID_MARKER} ${MARKERS.COL_MARKER} cmd${MARKERS.ROW_SEP} args${MARKERS.ROW_SEP} returns`;
+  const header = `${MARKERS.GRID_MARKER} ${MARKERS.COL_MARKER} invoke${MARKERS.ROW_SEP} args${MARKERS.ROW_SEP} returns`;
   const rows = tools.map((tool) => {
     const args = tool.params.map((p) => {
       const suffix = p.optional ? " optional" : "";
@@ -146,7 +146,7 @@ export function buildToolCallPayload(errorPayload: any): string {
   // Registry grid
   if (tools.length > 0) {
     const registryGrid = tools.map((tool) => ({
-      cmd: tool.name,
+      invoke: tool.name,
       args: tool.params.map((p) => `${p.name} ${p.type}${p.optional ? " optional" : ""}`).join(" "),
       returns: tool.returns || `${TYPE_ANNOTATION}grid`,
     }));
