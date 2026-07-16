@@ -224,10 +224,11 @@ assert(flatTools.length === 2, "parsed 2 tools");
 assert(flatTools[0].name === "add_import", "first tool is add_import");
 assert(flatTools[0].params.length === 3, "add_import has 3 params");
 assert(flatTools[0].params[2].name === "imports", "third param name is imports");
-assert(flatTools[0].params[2].optional === true, "third param is optional");
+assert(flatTools[0].params[2].type === "τstr[]", "third param type is τstr[]");
+assert(flatTools[0].params[2].optional === false, "third param is NOT optional");
 
 const regGrid = toRegistryGrid(flatTools);
-assert(regGrid.includes("imports τstr optional"), "registry grid formats optional param correctly");
+assert(regGrid.includes("imports τstr[]"), "registry grid formats array type correctly");
 
 // ═══════════════════════════════════════════════════════
 // Summary

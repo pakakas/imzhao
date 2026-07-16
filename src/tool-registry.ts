@@ -81,14 +81,22 @@ function parseFlatParams(raw: string): ToolParam[] {
   if (!raw) return [];
   return raw.split(",").map((s) => {
     const trimmed = s.trim();
-    const isOptional = trimmed.endsWith("[]");
+    const isArray = trimmed.endsWith("[]");
     const name = trimmed.replace(/\[\]$/, "");
-    return { name, type: `${TYPE_ANNOTATION}str`, optional: isOptional };
+    return { name, type: isArray ? `${TYPE_ANNOTATION}str[]` : `${TYPE_ANNOTATION}str`, optional: false };
   });
 }
 
 function normalizeType(type: string): string {
   const t = type.toLowerCase().replace(/optional/i, "").trim();
+  if (t.endsWith("[]")) {
+    const base = t.slice(0, -2).trim();
+    return `${normalizeBaseType(base)}[]`;
+  }
+  return normalizeBaseType(t);
+}
+
+function normalizeBaseType(t: string): string {
   switch (t) {
     case "string": return `${TYPE_ANNOTATION}str`;
     case "number": return `${TYPE_ANNOTATION}num`;
