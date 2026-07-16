@@ -30,7 +30,7 @@ Parameter dalam registri dapat ditandai sebagai opsional:
 
 ## 3. Pola Pemanggilan Alat (Invoke Special Grid)
 
-Blok invoke (pemanggilan alat) adalah **special grid**. Berbeda dengan grid biasa yang diawali dengan penanda grid standar `░`, invoke special grid diawali dengan penanda `i-like` yaitu **`¡`** (`INVOKE`).
+Blok invoke (pemanggilan alat) adalah **special grid**. Berbeda dengan grid biasa yang diawali dengan penanda grid standar `░`, invoke special grid diawali dengan penanda `¡`.
 
 Invoke grid mewakili satu atau lebih perintah yang akan dieksekusi:
 - **Kolom (`¦`)** mewakili jalur pipa berurutan / pipeline (kolom untuk pipeline).

@@ -30,7 +30,7 @@ Parameters in the registry can be marked as optional:
 
 ## 3. Tool Calling Patterns (Invoke Special Grid)
 
-An invoke block (tool call) is a **special grid**. Unlike normal grids which start with the standard grid marker `░`, the invoke special grid starts with the `i-like` marker `¡` (`INVOKE`).
+An invoke block (tool call) is a **special grid**. Unlike normal grids which start with the standard grid marker `░`, the invoke special grid starts with marker `¡`.
 
 The invoke grid represents one or more commands to be executed:
 - **Columns (`¦`)** represent a sequential pipeline (columns for pipeline).
