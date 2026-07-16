@@ -28,30 +28,34 @@ Parameters in the registry can be marked as optional:
 - **Detection**: In structured parameter schemas, a parameter is marked optional if its type definition contains the word `optional` (e.g., `"string optional"`). The parser (`parseParams`) identifies the word, sets `optional: true`, and normalizes the type annotation to its base form (e.g., `τstr`).
 - **Registry Generation**: In the generated Registry table, optional parameters are formatted as `${name} ${type} optional` (e.g., `path τstr optional`).
 
-## 3. Tool Calling Patterns
+## 3. Tool Calling Patterns (Invoke Special Grid)
 
-Tool calls are encoded as ADN grids with the `invoke` key. Three patterns:
+An invoke block (tool call) is a **special grid**. Unlike normal grids which start with the standard grid marker `░`, the invoke special grid starts with the `i-like` marker `¡` (`INVOKE`).
+
+The invoke grid represents one or more commands to be executed:
+- **Columns (`¦`)** represent a sequential pipeline (columns for pipeline).
+- **Rows (`→`)** represent parallel execution (rows for parallel).
 
 ### 3.1 Single Tool Call
-One command, one row:
+A single command, represented as a flat string:
 ```
-░→invoke≡CLI_SCRIPT
+¡grep pattern path
 ```
-Decoded: `{ type: "invoke", commands: "CLI_SCRIPT" }`
+Decoded: `{ type: "tool-invoke", mode: "pipeline", commands: [["grep", "pattern", "path"]] }`
 
-### 3.2 Parallel Tool Calls
-Multiple commands in multiple rows:
+### 3.2 Sequential Tool Calls (Pipeline)
+Multiple commands separated by column delimiters (`¦`) to form a pipeline:
 ```
-░→invoke≡Script1→Script2→Script3
+¡grep const ¦ count -n 10
 ```
-Decoded: `{ type: "invoke", mode: "parallel", commands: ["Script1", "Script2", "Script3"] }`
+Decoded: `{ type: "tool-invoke", mode: "pipeline", commands: [["grep", "const"], ["count", "-n", "10"]] }`
 
-### 3.3 Sequential Tool Calls (Pipeline)
-Multiple commands in one row (multi-cell/columns):
+### 3.3 Parallel Tool Calls
+Multiple commands separated by row markers (`→`) for parallel execution:
 ```
-░→invoke≡Script1¦Script2¦Script3
+¡grep const → count -v
 ```
-Decoded: `{ type: "invoke", mode: "pipeline", commands: ["Script1", "Script2", "Script3"] }`
+Decoded: `{ type: "tool-invoke", mode: "parallel", commands: [["grep", "const"], ["count", "-v"]] }`
 
 ## 4. Tool Return Types and Data Classification
 
