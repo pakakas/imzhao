@@ -11,7 +11,7 @@ description: Skill for handling iMZHAO agent protocol operational markers and to
 
 ## Registry Grid
 - Format tool registry using `░` grid with columns: `invoke`, `args`, `returns`.
-- Recognize ADN grid with title `Registry` or `Tool Registry` as the tool registry.
+- Recognize ADN grid with title `Tool Registry` as the tool registry.
 - Map optional parameters using suffix `optional` (e.g., `path τstr optional`).
 
 ## Tool Calling (Special Grid)
