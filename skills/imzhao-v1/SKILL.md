@@ -18,4 +18,3 @@ description: Skill for handling iMZHAO agent protocol operational markers and to
 - Combine multiple commands in the invoke grid using:
   - **Sequential (Pipeline)**: Column separator `¦` (e.g., `¡grep const¦count -n 10`).
   - **Parallel**: Row marker `→` (e.g., `¡grep const→count -v`).
-- Keep markers tight. Do not write spaces around `¦` and `→`.
