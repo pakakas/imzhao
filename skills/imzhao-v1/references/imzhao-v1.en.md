@@ -23,6 +23,12 @@ Agentic does **not** define data serialization (that's ADN) or message framing (
 
 These markers may appear in ADN payloads and can be summarized in the instruction header using `buildHeader()`.
 
+### 2.1 Parameter Modifiers: Optional Parameters
+In flat format schemas (such as MDKV), parameters can be marked as optional:
+- **Suffix Notation**: An optional parameter name is marked with a trailing `[]` bracket notation (e.g., `imports[]`).
+- **Parsing**: The parser (`parseFlatParams`) identifies `[]` at the end of the parameter name, sets `optional: true`, and strips the suffix from the final parameter name (`imports`).
+- **Header Generation**: In the registry block metadata, optional parameters are annotated with the word `optional` (e.g., `imports τstr optional` in the `args` description).
+
 ## 3. Tool Calling Patterns
 
 Tool calls are encoded as ADN grids with the `invoke` key. Three patterns:
